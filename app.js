@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+// connect to DB
+const mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -23,6 +25,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/test', testRouter);
+
+// connect to DB
+// Local: mongodb://localhost:27017/WD18303
+const connection = mongoose.connect('mongodb://localhost:27017/xuongweb503')
+  .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
+  .catch(err => console.log('>>>>>>>>> DB Error: ', err));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
