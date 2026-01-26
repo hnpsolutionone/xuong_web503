@@ -37,7 +37,7 @@ router.put('/api/categories/:id', async function (req, res, next) {
             return res.status(400).json({ error: "Vui lòng cung cấp đầy đủ thông tin." });
         }
         const category = await categoryController.update(id, name, description);
-        res.status(201).json({ data: category });
+        res.status(200).json({ data: category });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -49,7 +49,7 @@ router.delete('/api/categories/:id', async function (req, res, next) {
     try {
         let id = req.params.id;
         const result = await categoryController.delete(id);
-        res.status(201).json({ status: result['deletedCount'] == 1 ? true : false });
+        res.status(200).json({ status: result['deletedCount'] == 1 ? true : false });
     } catch (error) {
         res.status(500).json({ error: 'error.message' });
     }
