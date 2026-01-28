@@ -10,9 +10,9 @@ export class productService {
 
     static async addData(data) {
         try {
-            //await axios.post('http://localhost:3000/products/api/products', data);
+            //await axios.post('http://localhost:3000/api/products', data);
             const token = localStorage.getItem('accessToken');
-            await axios.post('http://localhost:3000/products/api/products', data, {
+            await axios.post('http://localhost:3000/api/products', data, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -39,7 +39,7 @@ export class productService {
                     localStorage.setItem('refreshToken', response.data.refresh_token);
     
                     // Retry add the product with the new token
-                    await axios.post('http://localhost:3000/products/api/products', data, {
+                    await axios.post('http://localhost:3000/api/products', data, {
                         headers: {
                             Authorization: `Bearer ${accessToken}`
                         }
@@ -58,10 +58,10 @@ export class productService {
 
     static async deleteData(id) {
         try {
-            await axios.delete(`http://localhost:3000/products/api/products/${id}`);
+            await axios.delete(`http://localhost:3000/api/products/${id}`);
             /*
             const token = localStorage.getItem('accessToken');
-            await axios.delete(`http://localhost:3000/products/api/products/${id}`, {
+            await axios.delete(`http://localhost:3000/api/products/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -90,7 +90,7 @@ export class productService {
                     localStorage.setItem('refreshToken', response.data.refresh_token);
     
                     // Retry adding the product with the new token
-                    await axios.delete(`http://localhost:3000/products/api/products/${id}`, data, {
+                    await axios.delete(`http://localhost:3000/api/products/${id}`, data, {
                         headers: {
                             Authorization: `Bearer ${accessToken}`
                         }
@@ -109,10 +109,10 @@ export class productService {
 
     static async updateData(id, data) {
         try {
-            await axios.put(`http://localhost:3000/products/api/products/${id}`, data);
+            await axios.put(`http://localhost:3000/api/products/${id}`, data);
             /*
             const token = localStorage.getItem('accessToken');
-            await axios.put(`http://localhost:3000/products/api/products/${id}`, data, {
+            await axios.put(`http://localhost:3000/api/products/${id}`, data, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -141,7 +141,7 @@ export class productService {
                     localStorage.setItem('refreshToken', response.data.refresh_token);
     
                     // Retry editing the product with the new token
-                    await axios.put(`http://localhost:3000/products/api/products/${id}`, data, {
+                    await axios.put(`http://localhost:3000/api/products/${id}`, data, {
                         headers: {
                             Authorization: `Bearer ${accessToken}`
                         }
@@ -160,7 +160,7 @@ export class productService {
 
     static async getDataById(id) {
         try {
-            const response = await axios.get(`http://localhost:3000/products/api/products/${id}`);
+            const response = await axios.get(`http://localhost:3000/api/products/${id}`);
             return response.data;
         } catch (error) {
             console.log(error);
@@ -170,7 +170,7 @@ export class productService {
 
     static async getLastId() {
         try {
-            const response = await axios.get('http://localhost:3000/products/api/products');
+            const response = await axios.get('http://localhost:3000/api/products');
             return response.data[response.data.length - 1].id;
         } catch (error) {
             console.log(error);

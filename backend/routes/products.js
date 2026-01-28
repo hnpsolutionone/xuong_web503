@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const productController = require('../controller/ProductController');
+const categoryController = require('../controller/CategoryController');
 
 /* GET all products. */
 router.get('/api/products', async function (req, res, next) {
@@ -13,11 +14,25 @@ router.get('/api/products', async function (req, res, next) {
     }
 });
 
+/* GET one product. */
+router.get('/api/products/:id', async function (req, res, next) {
+    try {
+        // get product detail
+        let id = req.params.id;
+        const result = await productController.getDetail(id);
+        const categories = await categoryController.getAll();
+        res.status(200).json({ product: result, categories: categories });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 /* Create a product. */
 router.post('/api/products', async function (req, res, next) {
     try {
         let { name, price, quantity, description, image, categoryId, productType, viewed, status } = req.body;
+        console.log(req.body);
         if (!name || !price || !quantity || !description || !image || !categoryId || !productType || !viewed || !status) {
             return res.status(400).json({ error: "Vui lòng cung cấp đầy đủ thông tin." });
         }

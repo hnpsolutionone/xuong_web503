@@ -7,7 +7,7 @@ import { productService } from "../model/model.js";
 var tbody = document.querySelector("tbody");
 function showPro() {
   tbody.innerHTML = "";
-  productService.fetchData('http://localhost:3000/products/api/products').then((res) => {
+  productService.fetchData('http://localhost:3000/api/products').then((res) => {
     console.log(res)
     res.data.forEach((item) => {
       tbody.innerHTML += `
@@ -51,6 +51,7 @@ function addPro() {
   const image = document.getElementById("image").value;
   const price = document.getElementById("price").value;
   const quantity = document.getElementById("quantity").value;
+  const productType = document.getElementById("productType").value;
   const category = document.getElementById("category").value;
   const description = document.getElementById("description").value;
   const newPro = {
@@ -60,12 +61,14 @@ function addPro() {
     'image': image,
     'description': description,
     'categoryId': category,
-    'productType': 0,
-    'viewed': 1
+    'productType': productType,
+    'viewed': 1,
+    'status': 1
   };
   productService.addData(newPro);
-  showPro();
+  //showPro();
   modal.style.display = "none";
+  location.reload();
 }
 
 // viết chức năng xóa sản phẩm
@@ -74,7 +77,8 @@ document.querySelector("tbody").addEventListener("click", function (e) {
     const id = e.target.dataset.id;
     console.log(id);
     productService.deleteData(id);
-    showPro();
+    location.reload();
+    //showPro();
   }
 });
 // viết chức năng sửa sản phẩm
@@ -87,6 +91,7 @@ document.querySelector("tbody").addEventListener("click", function (e) {
       const selectOptions = pro.categories.map(item =>
         `<option ${pro.product.categoryId === item ? 'selected' : ''} value="${item._id}">${item.name}</option>`
       ).join('');
+      //console.log(pro.product);
       editModal.innerHTML = `
     <div class="modal-content">
                         <span class="close">&times;</span>
@@ -134,6 +139,7 @@ document.querySelector("tbody").addEventListener("click", function (e) {
                         <textarea id="editDescription" name="w3review" rows="4" cols="50">${pro.product.description}</textarea>
                         <br />
                         <input value="${pro.product.viewed}" type="hidden" id="editViewed" />
+                        <input value="${pro.product.status}" type="hidden" id="editStatus" />
                         <button class="editPro" data-id="${id}">Sửa</button>
                       </div>
     `
@@ -152,6 +158,8 @@ editModal.addEventListener("click", function (e) {
     const productType = document.getElementById("editProductType").value;
     const category = document.getElementById("editCategory").value;
     const description = document.getElementById("editDescription").value;
+    const viewed = document.getElementById("editViewed").value;
+    const status = document.getElementById("editStatus").value;
     console.log(id + name + image + price + category + description);
     productService.updateData(id, {
       'name': name,
@@ -161,10 +169,12 @@ editModal.addEventListener("click", function (e) {
       'image': image,
       'categoryId': category,
       'productType': productType,
-      'viewed': 100
+      'viewed': viewed,
+      'status': status
     });
-    showPro();
+    //showPro();
     editModal.style.display = "none";
+    location.reload();
   }
 }
 );

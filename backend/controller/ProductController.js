@@ -5,6 +5,11 @@ exports.getAll = async () => {
     return products;
 }
 
+exports.getDetail = async (id) => {
+    const product = await productService.getDetail(id);
+    return product;
+}
+
 exports.create = async (name, price, quantity, description, image, categoryId, productType, viewed, status) => {
     const product = await productService.create(name, price, quantity, description, image, categoryId, productType, viewed, status);
     return product;

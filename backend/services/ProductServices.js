@@ -6,6 +6,12 @@ exports.getAll = async () => {
     return products;
 }
 
+exports.getDetail = async (id) => {
+    // select * from products where _id = id
+    const product = await productModel.findOne({_id: id});
+    return product;
+}
+
 exports.create = async (name, price, quantity, description, image, categoryId, productType, viewed, status) => {
     // insert into products (name, description,...) values (?, ?)
     const product = new productModel({ name, price, quantity, description, image, categoryId, productType, viewed, status });
