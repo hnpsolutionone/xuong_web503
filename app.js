@@ -11,6 +11,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testRouter = require('./routes/test');
 var categoriesRouter = require('./routes/categories');
+var productsRouter = require('./routes/products');
 
 var app = express();
 app.use(cors());
@@ -29,6 +30,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/test', testRouter);
 app.use('/', categoriesRouter);
+app.use('/', productsRouter);
 
 // connect to DB
 // Local: mongodb://localhost:27017/WD18303
