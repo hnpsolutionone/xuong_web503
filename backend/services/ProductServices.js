@@ -42,7 +42,7 @@ exports.getAll = async (query) => {
 
 exports.getDetail = async (id) => {
     // select * from products where _id = id
-    const product = await productModel.findOne({_id: id});
+    const product = await productModel.findOne({_id: id}).populate('categoryId', '_id name');;
     return product;
 }
 

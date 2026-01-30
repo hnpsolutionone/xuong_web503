@@ -3,7 +3,7 @@ const cate_hotdeal= document.getElementById('hotdeal');
 const cate_tivi= document.getElementById('tivi');
 const cate_tulanh= document.getElementById('tulanh');
 
-productService.fetchData('http://localhost:3000/products/api/products?productType=2&limit=4').then(res=> {
+productService.fetchData('http://localhost:3000/api/products?productType=2&limit=5').then(res=> {
 res.data.forEach(function (item) {
     cate_hotdeal.innerHTML+=`
     <div class="sanpham border-blue">
@@ -22,7 +22,7 @@ res.data.forEach(function (item) {
     `
   });
 });
-productService.fetchData('http://localhost:3000/products/api/products?categoryId=672abc9bb9fe0dd9d794639b&limit=5').then(res=> {
+productService.fetchData('http://localhost:3000/api/products?categoryId=66f79ee650d6a85cdab75499&limit=5').then(res=> {
   res.data.forEach(function (item) {
     cate_tivi.innerHTML+=`
     <div class="sanpham border-green">
@@ -41,7 +41,7 @@ productService.fetchData('http://localhost:3000/products/api/products?categoryId
     `
   });
 });
-productService.fetchData('http://127.0.0.1:3000/products/api/products?categoryId=672d6863a5e5bfce3cba1562&limit=5').then(res=> {
+productService.fetchData('http://127.0.0.1:3000/api/products?categoryId=671ee6ad134606c36c808968&limit=5').then(res=> {
   res.data.forEach(function (item) {
     cate_tulanh.innerHTML+=`
     <div class="sanpham border-red">

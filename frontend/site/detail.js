@@ -12,16 +12,16 @@ let search_params = url.searchParams;
 let id = search_params.get('id');
 console.log(id);
 
-productService.fetchData(`http://localhost:3000/products/api/products/${id}`).then(res=> {
-console.log(res.data);
+productService.fetchData(`http://localhost:3000/api/products/${id}`).then(res=> {
+console.log(res.product);
 detailPro.innerHTML+=`
     <div class="">
-    <img src="${res.data.image}" alt="" />
+    <img src="${res?.product?.image}" alt="" />
     <br />
-    <span>${res.data.name}</span>
+    <span>${res?.product?.name}</span>
     <br />
-    <p class="gia">${res.data.price}đ <del> ${res.data.quantity}</del></p>
-    <p class="online-gia-re">${res.data.description}</p>
+    <p class="gia">${res.product.price}đ <del> ${res?.product?.quantity}</del></p>
+    <p class="online-gia-re">${res?.product?.description}</p>
   </div>
     `;
 });
