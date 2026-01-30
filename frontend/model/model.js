@@ -21,23 +21,13 @@ export class productService {
             if (error.response && error.response.status === 401) {
                 // Access Token hết hạn, lấy lại new access token từ refresh token
                 try {
-                    const refreshToken = localStorage.getItem('refreshToken');
-                    if (!refreshToken) {
-                        // Nếu refresh token không có thì redirect về trang login
-                        window.location.href = '/ASM_ES6/site/login.html';
-                        return;
-                    }
-    
                     // Gọi API refresh token để lấy new access token
-                    const response = await axios.post('http://localhost:3000/users/api/refresh-token', {
-                        refresh_token: refreshToken
-                    });
+                    const response = await axios.post('http://localhost:3000/api/refresh-token');
                     console.log(response);
                     // Cập nhật the access token và refresh token
                     const accessToken = response.data.access_token;
                     localStorage.setItem('accessToken', accessToken);
-                    localStorage.setItem('refreshToken', response.data.refresh_token);
-    
+                    
                     // Retry add the product with the new token
                     await axios.post('http://localhost:3000/api/products', data, {
                         headers: {

@@ -1,7 +1,7 @@
 const productService = require('../services/ProductServices');
 
-exports.getAll = async () => {
-    const products = await productService.getAll();
+exports.getAll = async (query) => {
+    const products = await productService.getAll(query);
     return products;
 }
 
