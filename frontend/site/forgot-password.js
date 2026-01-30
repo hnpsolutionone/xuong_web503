@@ -7,7 +7,7 @@ loginForm.addEventListener('submit', async (event) => {
   const email = document.querySelector('#email').value;
 
   try {
-    const response = await axios.post('http://localhost:3000/users/api/forgot-password', { email });
+    const response = await axios.post('http://localhost:3000/api/forgot-password', { email });
     console.log(response);
     if (response.data.status == true) {
       const succesMessage = document.querySelector('#succesMessage');

@@ -19,7 +19,7 @@ loginForm.addEventListener('submit', async (event) => {
   const password_confirmation = document.querySelector('#password_confirmation').value;
 
   try {
-    const response = await axios.post('http://localhost:3000/users/api/reset-password', { password, password_confirmation, token });
+    const response = await axios.post('http://localhost:3000/api/reset-password', { password, password_confirmation, token });
     console.log(response);
     if (response.data.status == true) {
       const succesMessage = document.querySelector('#succesMessage');

@@ -34,7 +34,7 @@ var logoutBtn = document.getElementById("logout");
 logoutBtn.onclick = function () {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
-  window.location.href = '/ASM_ES6/site/login.html';
+  window.location.href = '../site/login.html';
 };
 
 //// viết chức năng thêm sản phẩm

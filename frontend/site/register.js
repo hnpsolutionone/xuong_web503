@@ -11,10 +11,10 @@ registerForm.addEventListener('submit', async (event) => {
   const confirm_password = document.querySelector('#confirm_password').value;
 
   try {
-    const response = await axios.post('http://localhost:3000/users/api/register', 
+    const response = await axios.post('http://localhost:3000/api/register', 
       { name, age, email, password, confirm_password });
     // Redirect to another page upon successful register
-    window.location.href = '/ASM_ES6/site'; // Change the URL to the dashboard page
+    window.location.href = 'index.html';
   } catch (error) {
     // Handle register errors, such as displaying an error message to the user
     console.error('Register failed:', error.response.data);

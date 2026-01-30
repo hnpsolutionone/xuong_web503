@@ -13,9 +13,10 @@ loginForm.addEventListener('submit', async (event) => {
     const accessToken = response.data.access_token;
     
     // You can handle the token as needed, such as storing it in localStorage for further requests
+    localStorage.setItem('accessToken', accessToken);
     
     // Redirect to another page upon successful login
-    window.location.href = '/ASM_ES6/admin'; // Change the URL to the dashboard page
+    window.location.href = '../admin/index.html'; // Change the URL to the dashboard page
   } catch (error) {
     // Handle login errors, such as displaying an error message to the user
     console.error('Login failed:', error.response.data);

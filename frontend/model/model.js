@@ -37,7 +37,7 @@ export class productService {
                 } catch (refreshError) {
                     console.error('Error refreshing token:', refreshError);
                     // Nếu refresh token lỗi thì redirect về trang login
-                    //window.location.href = '/ASM_ES6/site/login.html';
+                    //window.location.href = '../site/login.html';
                 }
             } else {
                 console.error('Error fetching data:', error);
@@ -65,12 +65,12 @@ export class productService {
                     const refreshToken = localStorage.getItem('refreshToken');
                     if (!refreshToken) {
                         // Nếu refresh token không có thì redirect về trang login
-                        window.location.href = '/ASM_ES6/site/login.html';
+                        window.location.href = '../site/login.html';
                         return;
                     }
     
                     // Gọi API refresh token để lấy new access token
-                    const response = await axios.post('http://localhost:3000/users/api/refresh-token', {
+                    const response = await axios.post('http://localhost:3000/api/refresh-token', {
                         refresh_token: refreshToken
                     });
     
@@ -88,7 +88,7 @@ export class productService {
                 } catch (refreshError) {
                     console.error('Error refreshing token:', refreshError);
                     // Nếu refresh token lỗi thì redirect về trang login
-                    window.location.href = '/ASM_ES6/site/login.html';
+                    window.location.href = '../site/login.html';
                 }
             } else {
                 console.error('Error fetching data:', error);
@@ -116,12 +116,12 @@ export class productService {
                     const refreshToken = localStorage.getItem('refreshToken');
                     if (!refreshToken) {
                         // Nếu refresh token không có thì redirect về trang login
-                        window.location.href = '/ASM_ES6/site/login.html';
+                        window.location.href = '../site/login.html';
                         return;
                     }
     
                     // Gọi API refresh token để lấy new access token
-                    const response = await axios.post('http://localhost:3000/users/api/refresh-token', {
+                    const response = await axios.post('http://localhost:3000/api/refresh-token', {
                         refresh_token: refreshToken
                     });
                     console.log(response);
@@ -139,7 +139,7 @@ export class productService {
                 } catch (refreshError) {
                     console.error('Error refreshing token:', refreshError);
                     // Nếu refresh token lỗi thì redirect về trang login
-                    window.location.href = '/ASM_ES6/site/login.html';
+                    window.location.href = '../site/login.html';
                 }
             } else {
                 console.error('Error fetching data:', error);
@@ -171,7 +171,7 @@ export class productService {
     static async isAuth() {
         try {
             const token = localStorage.getItem('accessToken');
-            const response = await axios.get('http://localhost:3000/users/api/is-auth', {
+            const response = await axios.get('http://localhost:3000/api/is-auth', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -180,7 +180,7 @@ export class productService {
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 // Redirect to login page
-                window.location.href = '/ASM_ES6/site/login.html';
+                window.location.href = '../site/login.html';
             } else {
                 console.error('Error fetching data:', error);
                 throw error;
