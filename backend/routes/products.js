@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const productController = require('../controller/ProductController');
 const categoryController = require('../controller/CategoryController');
+const authen = require('../middleware/authen');
 
 /* GET all products. */
 router.get('/api/products', async function (req, res, next) {
@@ -29,7 +30,7 @@ router.get('/api/products/:id', async function (req, res, next) {
 
 
 /* Create a product. */
-router.post('/api/products', async function (req, res, next) {
+router.post('/api/products', [authen], async function (req, res, next) {
     try {
         let { name, price, quantity, description, image, categoryId, productType, viewed, status } = req.body;
         console.log(req.body);
@@ -44,7 +45,7 @@ router.post('/api/products', async function (req, res, next) {
 });
 
 /* Update a product. */
-router.put('/api/products/:id', async function (req, res, next) {
+router.put('/api/products/:id', [authen], async function (req, res, next) {
     try {
         let id = req.params.id;
         let { name, price, quantity, description, image, categoryId, productType, viewed, status } = req.body;
@@ -60,7 +61,7 @@ router.put('/api/products/:id', async function (req, res, next) {
 
 
 /* Delete a category. */
-router.delete('/api/products/:id', async function (req, res, next) {
+router.delete('/api/products/:id', [authen], async function (req, res, next) {
     try {
         let id = req.params.id;
         const result = await productController.delete(id);

@@ -65,10 +65,11 @@ function addPro() {
     'viewed': 1,
     'status': 1
   };
+  console.log(newPro);
   productService.addData(newPro);
   //showPro();
-  modal.style.display = "none";
-  location.reload();
+  //modal.style.display = "none";
+  //location.reload();
 }
 
 // viết chức năng xóa sản phẩm

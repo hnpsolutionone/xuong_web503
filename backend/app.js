@@ -14,7 +14,10 @@ var categoriesRouter = require('./routes/categories');
 var productsRouter = require('./routes/products');
 
 var app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5500', // cho phép frontend localhost:5500 được truy cập API vì backend chạy ở localhost:3000, chúng khác port là khác origin
+  credentials: true
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

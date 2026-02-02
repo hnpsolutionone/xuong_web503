@@ -11,8 +11,7 @@ registerForm.addEventListener('submit', async (event) => {
   const confirm_password = document.querySelector('#confirm_password').value;
 
   try {
-    const response = await axios.post('http://localhost:3000/api/register', 
-      { name, age, email, password, confirm_password });
+    const response = await axios.post('http://localhost:3000/api/register', { name, age, email, password, confirm_password });
     // Redirect to another page upon successful register
     window.location.href = 'index.html';
   } catch (error) {

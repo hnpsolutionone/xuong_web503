@@ -39,11 +39,15 @@ router.post('/api/login', async function (req, res, next) {
       
       // refresh_token sẽ được lưu trong httpOnly cookie, nghĩa là JS phía client không đọc được
       res.cookie('refresh_token', refresh_token, {
-        httpOnly: true,        // JS không đọc được
-        secure: true,          // chỉ gửi qua HTTPS (prod)
-        sameSite: 'strict',    // chống CSRF
-        path: '/api/refresh-token',  // chỉ gửi khi gọi refresh
-        maxAge: 90 * 24 * 60 * 60 * 1000 // 90 ngày (ms)
+        httpOnly: true,
+        /*
+        'lax' hoặc 'strict' hoặc 'none':
+        - 'lax': cookie sẽ được gửi trong các yêu cầu điều hướng cấp cao (top-level navigation) và các yêu cầu GET được tạo bởi các trang bên ngoài (cross-site).
+        - 'strict': cookie chỉ được gửi trong các yêu cầu cùng nguồn (same-site requests), không bao giờ được gửi trong các yêu cầu cross-site.
+        - 'none': cookie sẽ được gửi trong tất cả các yêu cầu, bao gồm cả cross-site requests. Tuy nhiên, khi sử dụng 'none', bạn phải đặt thuộc tính 'secure' thành true, nghĩa là cookie chỉ được gửi qua kết nối HTTPS.  
+        */
+        sameSite: 'lax', 
+        secure: false // true nếu dùng HTTPS
       });
       res.status(200).json({ user: payload, access_token });
     }
@@ -96,7 +100,7 @@ router.post('/api/refresh-token', async function (req, res, next) {
   try {
     // Lấy refresh token từ COOKIE, KHÔNG phải body
     const refresh_token = req.cookies.refresh_token;
-
+    console.log("Refresh token:", refresh_token);
     if (!refresh_token) {
       return res.status(401).json({
         error: 'Không có refresh token'
@@ -111,10 +115,14 @@ router.post('/api/refresh-token', async function (req, res, next) {
     // Set lại cookie httpOnly
     res.cookie('refresh_token', new_refresh_token, {
       httpOnly: true,
-      secure: true,       // prod
-      sameSite: 'strict',
-      path: '/api/refresh-token',
-      maxAge: 90 * 24 * 60 * 60 * 1000
+      /*
+        'lax' hoặc 'strict' hoặc 'none':
+        - 'lax': cookie sẽ được gửi trong các yêu cầu điều hướng cấp cao (top-level navigation) và các yêu cầu GET được tạo bởi các trang bên ngoài (cross-site).
+        - 'strict': cookie chỉ được gửi trong các yêu cầu cùng nguồn (same-site requests), không bao giờ được gửi trong các yêu cầu cross-site.
+        - 'none': cookie sẽ được gửi trong tất cả các yêu cầu, bao gồm cả cross-site requests. Tuy nhiên, khi sử dụng 'none', bạn phải đặt thuộc tính 'secure' thành true, nghĩa là cookie chỉ được gửi qua kết nối HTTPS.  
+        */
+      sameSite: 'lax',
+      secure: false
     });
     
     res.status(200).json({ user: data.user, access_token });

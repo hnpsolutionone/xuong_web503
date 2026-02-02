@@ -9,6 +9,8 @@ export class productService {
     }
 
     static async addData(data) {
+        console.log("aaa=", data);
+
         try {
             //await axios.post('http://localhost:3000/api/products', data);
             const token = localStorage.getItem('accessToken');
@@ -18,16 +20,22 @@ export class productService {
                 }
             });
         } catch (error) {
+            console.log("bbb=", error);
             if (error.response && error.response.status === 401) {
                 // Access Token hết hạn, lấy lại new access token từ refresh token
                 try {
                     // Gọi API refresh token để lấy new access token
-                    const response = await axios.post('http://localhost:3000/api/refresh-token');
-                    console.log(response);
+                    //const response = await axios.post('http://localhost:3000/api/refresh-token', { withCredentials: true });
+                    const response = await axios.post(
+                        'http://localhost:3000/api/refresh-token',
+                        {}, // body rỗng
+                        { withCredentials: true } // config
+                    );
+                    console.log("ccc=", response);
                     // Cập nhật the access token và refresh token
                     const accessToken = response.data.access_token;
                     localStorage.setItem('accessToken', accessToken);
-                    
+
                     // Retry add the product with the new token
                     await axios.post('http://localhost:3000/api/products', data, {
                         headers: {
@@ -44,6 +52,7 @@ export class productService {
                 throw error;
             }
         }
+
     }
 
     static async deleteData(id) {
@@ -68,17 +77,17 @@ export class productService {
                         window.location.href = '../site/login.html';
                         return;
                     }
-    
+
                     // Gọi API refresh token để lấy new access token
                     const response = await axios.post('http://localhost:3000/api/refresh-token', {
                         refresh_token: refreshToken
                     });
-    
+
                     // Cập nhật the access token và refresh token
                     const accessToken = response.data.access_token;
                     localStorage.setItem('accessToken', accessToken);
                     localStorage.setItem('refreshToken', response.data.refresh_token);
-    
+
                     // Retry adding the product with the new token
                     await axios.delete(`http://localhost:3000/api/products/${id}`, data, {
                         headers: {
@@ -119,7 +128,7 @@ export class productService {
                         window.location.href = '../site/login.html';
                         return;
                     }
-    
+
                     // Gọi API refresh token để lấy new access token
                     const response = await axios.post('http://localhost:3000/api/refresh-token', {
                         refresh_token: refreshToken
@@ -129,7 +138,7 @@ export class productService {
                     const accessToken = response.data.access_token;
                     localStorage.setItem('accessToken', accessToken);
                     localStorage.setItem('refreshToken', response.data.refresh_token);
-    
+
                     // Retry editing the product with the new token
                     await axios.put(`http://localhost:3000/api/products/${id}`, data, {
                         headers: {

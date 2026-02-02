@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 const categoryController = require('../controller/CategoryController');
+const authen = require('../middleware/authen');
 
 /* GET all categories. */
-router.get('/api/categories', async function (req, res, next) {
+router.get('/api/categories', [authen], async function (req, res, next) {
     try {
         // get categories list
         const result = await categoryController.getAll();
@@ -15,7 +16,7 @@ router.get('/api/categories', async function (req, res, next) {
 
 
 /* Create a category. */
-router.post('/api/categories', async function (req, res, next) {
+router.post('/api/categories', [authen], async function (req, res, next) {
     try {
         let { name, description } = req.body;
         if (!name || !description) {
@@ -29,7 +30,7 @@ router.post('/api/categories', async function (req, res, next) {
 });
 
 /* Update a category. */
-router.put('/api/categories/:id', async function (req, res, next) {
+router.put('/api/categories/:id', [authen], async function (req, res, next) {
     try {
         let id = req.params.id;
         let { name, description } = req.body;
@@ -45,7 +46,7 @@ router.put('/api/categories/:id', async function (req, res, next) {
 
 
 /* Delete a category. */
-router.delete('/api/categories/:id', async function (req, res, next) {
+router.delete('/api/categories/:id', [authen], async function (req, res, next) {
     try {
         let id = req.params.id;
         const result = await categoryController.delete(id);

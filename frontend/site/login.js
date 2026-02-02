@@ -8,7 +8,8 @@ loginForm.addEventListener('submit', async (event) => {
   const password = document.querySelector('#password').value;
 
   try {
-    const response = await axios.post('http://localhost:3000/api/login', { email, password });
+    // { withCredentials: true } để gửi cookie (refresh token) vào DevTools → Application → Cookies
+    const response = await axios.post('http://localhost:3000/api/login', { email, password }, { withCredentials: true });
     // Assuming the login API returns some kind of authentication token upon successful login
     const accessToken = response.data.access_token;
     
