@@ -16,7 +16,7 @@ function showPro() {
           <td>${item.name}</td>
           <td><img src="${item.image}" width="120"></td>
           <td>${item.price}</td>
-          <td>${item.categoryId.name || null}</td>
+          <td>${item.categoryId?.name ?? null}</td>
           <td>${item.description}</td>
           <td>
             <button class="deletePro" data-id="${item._id}">Xóa</button>
@@ -78,7 +78,7 @@ document.querySelector("tbody").addEventListener("click", function (e) {
     const id = e.target.dataset.id;
     console.log(id);
     productService.deleteData(id);
-    location.reload();
+    //location.reload();
     //showPro();
   }
 });
@@ -89,10 +89,12 @@ document.querySelector("tbody").addEventListener("click", function (e) {
     const id = e.target.dataset.id;
     productService.getDataById(id).then((pro) => {
       editModal.style.display = "block";
+      console.log('aaaa=',pro.product);
+      
       const selectOptions = pro.categories.map(item =>
         `<option ${pro.product.categoryId === item ? 'selected' : ''} value="${item._id}">${item.name}</option>`
       ).join('');
-      //console.log(pro.product);
+      
       editModal.innerHTML = `
     <div class="modal-content">
                         <span class="close">&times;</span>
@@ -175,7 +177,7 @@ editModal.addEventListener("click", function (e) {
     });
     //showPro();
     editModal.style.display = "none";
-    location.reload();
+    //location.reload();
   }
 }
 );

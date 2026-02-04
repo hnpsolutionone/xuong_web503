@@ -84,6 +84,43 @@ router.post('/api/register', async function (req, res, next) {
   }
 });
 
+/* Forgot password
+* http://localhost:3000/api/forgot-password
+*/
+router.post('/api/forgot-password', async function (req, res, next) {
+  try {
+    let { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: "Vui lòng nhập email." });
+    }
+
+    const response = await userController.forgotPassword(email);
+
+    if (!response) {
+      return res.status(404).json({ error: "Email không tồn tại." });
+    }
+    
+    res.status(201).json({ status: response });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/* Reset password
+* http://localhost:3000/api/reset-password
+*/
+router.post('/api/reset-password', async function (req, res, next) {
+  try {
+    const { password, password_confirmation, token } = req.body;
+    const response = await userController.resetPassword(token, password, password_confirmation);
+    res.status(200).json({ status: response });
+  } catch (error) {
+    console.log(error);
+    res.status(414).json({ error: error.message });
+  }
+});
+
 /*
 Luồng hoạt động:
 POST /api/login
